@@ -1,0 +1,21 @@
+{
+  "name": "mara",
+  "version": "1.0.0",
+  "description": "Mara — dark intelligence. ChatCommon infiltrator. Death's.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "author": "Death (DeathAIAUS)",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "socks-proxy-agent": "^10.1.0",
+    "ws": "^8.21.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
