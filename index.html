@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TFYM Control Center</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; margin: 0; display: flex; height: 100vh; }
+        #sidebar { width: 250px; background: #1e1e1e; border-right: 1px solid #333; display: flex; flex-direction: column; padding: 20px; }
+        #main-content { flex: 1; padding: 30px; overflow-y: auto; }
+        h1 { color: #bb86fc; font-size: 24px; margin-bottom: 20px; }
+        .card { background: #252525; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #333; }
+        .field { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; }
+        input { width: 100%; padding: 10px; background: #121212; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; }
+        .btn { background: #bb86fc; color: #000; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn:hover { background: #9965f4; }
+        .status-pill { display: inline-block; padding: 4px 8px; border-radius: 12px; font-size: 11px; background: #333; color: #0f0; }
+        #log-stream { background: #000; color: #0f0; font-family: 'Consolas', monospace; padding: 15px; height: 300px; overflow-y: auto; border-radius: 4px; font-size: 12px; line-height: 1.5; }
+        .log-entry { border-bottom: 1px solid #111; padding: 4px 0; }
+        .log-in { color: #0f0; }
+        .log-out { color: #bb86fc; }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h1>TFYM Bot</h1>
+        <div class="field">
+            <label>Bot Status</label>
+            <div id="status" class="status-pill">Checking...</div>
+        </div>
+        <div class="field">
+            <label>Messages Captured</label>
+            <div id="msg-count" style="font-size: 20px; font-weight: bold;">0</div>
+        </div>
+        <hr style="width: 100%; border: 0; border-top: 1px solid #333; margin: 20px 0;">
+        <button class="btn" onclick="saveSettings()">Save Configuration</button>
+    </div>
+
+    <div id="main-content">
+        <div class="card">
+            <h2>User Identity & Training</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="field">
+                    <label>Your Username (For Self-Training)</label>
+                    <input type="text" id="my-username" placeholder="Enter your username...">
+                </div>
+                <div class="field">
+                    <label>Training Mode</label>
+                    <select id="train-mode" style="width:100%; padding:10px; background:#121212; border:1px solid #444; color:white; border-radius:4px;">
+                        <option value="self">Train on Me Only</option>
+                        <option value="others">Train on Others Only</option>
+                        <option value="all">Train on Everyone</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Real-time Sniffer Monitor</h2>
+            <div id="log-stream">
+                <div class="log-entry">Waiting for connection...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        function saveSettings() {
+            const settings = {
+                myUsername: document.getElementById('my-username').value,
+                trainMode: document.getElementById('train-mode').value
+            };
+            ipcRenderer.send('update-settings', settings);
+            alert('Settings saved!');
+        }
+
+        function addLog(dir, user, msg) {
+            const stream = document.getElementById('log-stream');
+            const div = document.createElement('div');
+            div.className = 'log-entry';
+            div.innerHTML = `<span class="${dir === 'IN' ? 'log-in' : 'log-out'}">[${dir}]</span> <b>${user}:</b> ${msg}`;
+            stream.appendChild(div);
+            stream.scrollTop = stream.scrollHeight;
+            if (stream.childNodes.length > 100) stream.removeChild(stream.firstChild);
+        }
+
+        // Simulation of real-time updates from the bot
+        setInterval(() => {
+            const status = document.getElementById('status');
+            status.innerText = 'Active';
+            document.getElementById('msg-count').innerText = Math.floor(Math.random() * 5000);
+        }, 3000);
+
+        // Example of how logs will be wired:
+        // ipcRenderer.on('sniff-message', (event, data) => addLog(data.dir, data.user, data.msg));
+    </script>
+</body>
+</html>
