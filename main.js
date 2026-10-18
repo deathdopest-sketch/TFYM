@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const BotConfig = require('./BotConfig');
 
 let mainWindow;
 
@@ -26,14 +27,16 @@ app.on('window-all-closed', () => {
 // IPC handlers for Bot Control
 ipcMain.on('update-settings', (event, settings) => {
   console.log('Updating bot settings:', settings);
-  // Here we would connect to the Bot process and update its config
+  BotConfig.set('training.myUsername', settings.myUsername);
+  BotConfig.set('training.mode', settings.trainMode);
 });
 
 ipcMain.on('get-bot-status', (event) => {
   event.reply('bot-status-reply', {
     status: 'Active',
-    training: true,
+    training: BotConfig.get('training.enabled'),
     sniffing: true,
-    messagesCaptured: 1240
+    messagesCaptured: 0 // This would be wired to the actual sniffer count
   });
 });
+
