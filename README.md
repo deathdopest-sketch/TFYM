@@ -1,4 +1,4 @@
-# 🌸 Audacity AI Companion (Chaturbate Edition)
+# 🌸 TFYM / Audacity AI Companion (Chaturbate Edition)
 
 Welcome to Audacity! She is a custom AI companion designed to manage your Chaturbate room, engage with your regulars, track tips, and keep your community hype.
 
@@ -19,9 +19,9 @@ Once Ollama is installed:
 1. Open your terminal (search for `cmd` or `PowerShell` in Windows).
 2. Type this and press Enter:
    ```bash
-   ollama run lilly
+   ollama run mara
    ```
-   *(If you haven't downloaded the "lilly" model yet, this will take a few minutes. Once you see a `>>>` prompt, the brain is ready! You can close that window.)*
+   *(Note: If you are using a custom model name, replace 'mara' with your model's name. Once you see a `>>>` prompt, the brain is ready!)*
 
 ### 3. Configure the Bot
 1. Find the file named `.env.cb.example` in the bot folder.
@@ -44,12 +44,26 @@ Once Ollama is installed:
 
 ---
 
+## 🖥️ Control Center (GUI)
+This bot comes with a built-in Control Center to monitor everything in real-time.
+To launch the GUI:
+```bash
+npm start
+```
+**Features:**
+- **Real-time Monitor**: Watch the bot sniff chat messages from other sites.
+- **Identity Settings**: Set your own username so the bot knows who to learn from.
+- **Training Modes**: Switch between training on yourself, others, or everyone.
+
+---
+
 ## 🛠️ What Audacity Does For You
 
 - **Tip Tracking**: She acknowledges tips and adds people to the "Regulars" list automatically.
 - **The Roster**: She keeps track of your top supporters and high-performers.
 - **Mod Powers**: She can handle banned words and spam so you don't have to.
-- **Persona**: She's not a generic bot; she's programmed with the Audacity personality—bold, engaging, and sharp.
+- **Persona**: She's not a generic bot; she's programmed with the Mara personality—dark, intelligent, and magnetic.
+- **Cross-Site Learning**: She can sniff other chat sites to learn how users interact and refine her responses.
 
 ---
 
